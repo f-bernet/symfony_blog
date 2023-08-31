@@ -71,7 +71,9 @@ class ArticleController extends AbstractController
 
             return $this->redirectToRoute('article_index');
         }
-        return $this->render('article/update.html.twig');
+        return $this->render('article/update.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/article/{article}/delete', name: 'article_delete')]
