@@ -14,9 +14,12 @@
         {% endblock %}
     </head>
     <body>
-        {% for flash in app.flashes %}
-            {{ flash }}
-        {% endfor %}
-        {% block body %}{% endblock %}
+        {% if app.flashes is defined and app.flashes is not empty %}
+            {% for flash in app.flashes %}
+                {{ dump(flash) }}
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
     </body>
 </html>
