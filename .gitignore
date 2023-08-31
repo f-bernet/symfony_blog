@@ -16,14 +16,6 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-.idea/codeception.xml
-.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
-.idea/commandlinetools/Symfony_31_08_2023_11_14.xml
-.idea/php.xml
-.idea/phpspec.xml
-.idea/symfony_blog.iml
-.idea/phpunit.xml
-.idea/vcs.xml
-.idea/php.xml
-.idea/symfony_blog.iml
-.idea/vcs.xml
+.idea/*
+migrations/*
+node_modules/*

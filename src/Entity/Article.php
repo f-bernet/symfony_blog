@@ -3,52 +3,28 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ArticleRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $content;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function updateTimestamps(): void
-    {
-        $this->setUpdatedAt(new \DateTimeImmutable('now'));
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new \DateTimeImmutable('now'));
-        }
-    }
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -60,7 +36,7 @@ class Article
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title): static
     {
         $this->title = $title;
 
@@ -72,7 +48,7 @@ class Article
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
@@ -84,7 +60,7 @@ class Article
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -96,7 +72,7 @@ class Article
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 

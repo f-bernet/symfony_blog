@@ -21,33 +21,15 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function add(Article $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Article $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
+//        return $this->createQueryBuilder('a')
+//            ->andWhere('a.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
+//            ->orderBy('a.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -56,8 +38,8 @@ class ArticleRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?Article
 //    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
+//        return $this->createQueryBuilder('a')
+//            ->andWhere('a.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()
