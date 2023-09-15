@@ -10,9 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/article/{article}/comment')]
+
 class ArticleCommentController extends AbstractController
 {
-    #[Route('/create', name: 'article_create')]
+    #[Route('/create', name: 'article_comment_create')]
     public function create(Request $request, EntityManagerInterface $entityManager, Article $article): Response
     {
         $comment = new ArticleComment();
@@ -37,7 +39,7 @@ class ArticleCommentController extends AbstractController
         ]);
     }
 
-    #[Route('/{comment}/update', name: 'article_update')]
+    #[Route('/{comment}/update', name: 'article_comment_update')]
     public function update(Request $request, EntityManagerInterface $entityManager, Article $article, ArticleComment $comment): Response
     {
         $text = $request->request->get('commentText');
@@ -61,7 +63,7 @@ class ArticleCommentController extends AbstractController
         ]);
     }
 
-    #[Route('/{comment}/delete', name: 'article_delete')]
+    #[Route('/{comment}/delete', name: 'article_comment_delete')]
     public function delete(EntityManagerInterface $entityManager, ArticleComment $comment): Response
     {
         $comment->setText('[deleted]');
