@@ -1,22 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
-    <div>
-        {% if articles is not empty %}
-            {% for article in articles %}
-                <div>
-                    <h1>
-                        <a href="{{ path('article_item', {article: article.id}) }}">{{ article.title }}</a>
-                    </h1>
-
-                    <p>{{ article.content }}</p>
-                    <a href="{{ path('article_delete', {article: article.id}) }}">X</a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No articles yet</p>
-        {% endif %}
-    </div>
-
-    <a href="{{ path('article_create') }}">New article</a>
+    Hello {{ app.user.email }}
 {% endblock %}
