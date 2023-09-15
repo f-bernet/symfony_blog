@@ -4,13 +4,10 @@
     <div>
         {% if articles is not empty %}
             {% for article in articles %}
-                <div>
-                    <h1>
-                        <a href="{{ path('article_item', {article: article.id}) }}">{{ article.title }}</a>
-                    </h1>
-
-                    <p>{{ article.content }}</p>
-                </div>
+                <a href="{{ path('article_item', {article: article.id}) }}">
+                    <h1>{{ article.title }}</h1>
+                    <p>{{ article.content|striptags }}</p>
+                </a>
             {% endfor %}
         {% else %}
             <p>No articles yet</p>
