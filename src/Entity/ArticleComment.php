@@ -28,9 +28,20 @@ class ArticleComment
     #[ORM\OneToMany(mappedBy: 'commentResponse', targetEntity: self::class)]
     private Collection $articleCommentResponses;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->articleCommentResponses = new ArrayCollection();
+
+        $this->updatedAt = new \DateTimeImmutable();
+        if(empty($this->createdAt)){
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 
     public function getId(): ?int
@@ -88,6 +99,30 @@ class ArticleComment
             $this->articleCommentResponses->add($articleCommentResponse);
             $articleCommentResponse->setCommentResponse($this);
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
