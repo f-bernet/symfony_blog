@@ -34,6 +34,11 @@ class Article
     public function __construct()
     {
         $this->articleComments = new ArrayCollection();
+
+        $this->updatedAt = new \DateTimeImmutable();
+        if(empty($this->createdAt)){
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 
     public function getId(): ?int
