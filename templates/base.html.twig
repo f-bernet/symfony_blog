@@ -20,6 +20,15 @@
             {% endfor %}
         {% endif %}
 
+        <nav class="navbar navbar-dark bg-primary d-flex justify-content-start p-3">
+            <a class="navbar-brand" href="{{ path('index') }}">Home</a>
+            <ul class="navbar-nav d-flex justify-content-start flex-row">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('article_index') }}">Articles</a>
+                </li>
+            </ul>
+        </nav>
+
         {% block content %}{% endblock %}
     </body>
 </html>
