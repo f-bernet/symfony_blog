@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="article-listing">
         {% if articles is not empty %}
             {% for article in articles %}
-                <a href="{{ path('article_item', {article: article.id}) }}" class="card" style="width: 18rem;">
+                <a href="{{ path('article_item', {article: article.id}) }}" class="card article-card" style="width: 18rem;">
                     <img class="card-img-top" src="/uploads/images/article/{{ article.image }}" alt="{{ article.image }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ article.title }}</h5>
-                        <p class="card-text">{{ article.content|striptags }}</p>
+                        {% set content = article.content|striptags %}
+                        <p class="card-text">{{ (content|length > 100 ? content|slice(0, 100) ~ '…' : content) }}</p>
                     </div>
                 </a>
             {% endfor %}
         {% else %}
             <p>No articles yet</p>
         {% endif %}
+    </div>
 {% endblock %}

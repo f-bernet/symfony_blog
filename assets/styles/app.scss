@@ -4,6 +4,21 @@ body{
   height: 100vh;
 }
 
+.article-listing{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .article-card {
+    margin: 10px;
+
+    .card-title{
+      font-weight: bold;
+    }
+  }
+}
+
 .article-item{
   height: 100%;
 
