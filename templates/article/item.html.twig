@@ -17,20 +17,60 @@
                     <div class="article-comments-item">
                         <div class="article-comments-main">
                             <p class="article-comments-main-text">{{ comment.text }}</p>
-                            <p class="article-comments-main-user">{{ comment.user.email }} ({{ comment.createdAt|date('d-m-Y g:ia') }})</p>
+                            <p class="article-comments-main-user">{{ comment.user.email }}
+                                ({{ comment.createdAt|date('d-m-Y g:ia') }})</p>
+
+                            <button type="button" class="btn btn-primary"
+                                    onclick="getElementById('comment_{{ comment.id }}').style.display=''; this.style.display='none'">
+                                Reply
+                            </button>
+                            <form name="comment-response-{{ comment.id }}"
+                                  action="{{ path('article_comment_create', {'article': article.id}) }}"
+                                  method="post" class="response-form" id="comment_{{ comment.id }}"
+                                  style="display: none">
+                                <textarea name="comment-response-{{ comment.id }}" rows="5">Reply here...</textarea>
+                                <button type="submit" class="btn btn-primary btn-submit">Reply</button>
+                            </form>
                         </div>
                         {% if comments.responseComment[comment.id] is defined and comments.responseComment[comment.id] is not empty %}
                             <div class="article-comments-responses">
                                 {% for response in comments.responseComment[comment.id] %}
                                     <div class="article-comments-response">
                                         <p class="article-comments-response-text">{{ response.text }}</p>
-                                        <p class="article-comments-response-user">{{ response.user.email }} ({{ response.createdAt|date('d-m-Y g:ia') }})</p>
+                                        <p class="article-comments-response-user">{{ response.user.email }}
+                                            ({{ response.createdAt|date('d-m-Y g:ia') }})</p>
+
+                                        <button type="button" class="btn btn-primary"
+                                                onclick="getElementById('comment_{{ response.id }}').style.display=''; this.style.display='none'">
+                                            Reply
+                                        </button>
+                                        <form name="comment-response-{{ response.id }}"
+                                              action="{{ path('article_comment_create', {'article': article.id}) }}"
+                                              method="post"
+                                              class="response-form" id="comment_{{ response.id }}"
+                                              style="display: none">
+                                            <textarea name="comment-response-{{ comment.id }}"
+                                                      rows="5">Reply here...</textarea>
+                                            <button type="submit" class="btn btn-primary btn-submit">Reply</button>
+                                        </form>
                                     </div>
                                 {% endfor %}
                             </div>
                         {% endif %}
                     </div>
                 {% endfor %}
+
+                <button type="button" class="btn btn-primary"
+                        onclick="getElementById('comment_{{ article.id }}').style.display=''; this.style.display='none'">
+                    Comment
+                </button>
+                <form name="comment-article-{{ article.id }}"
+                      action="{{ path('article_comment_create', {'article': article.id}) }}"
+                      method="post" class="response-form" id="comment_{{ article.id }}"
+                      style="display: none">
+                    <textarea name="comment-article-{{ article.id }}" rows="5">Comment here...</textarea>
+                    <button type="submit" class="btn btn-primary btn-submit">Comment</button>
+                </form>
             </div>
         </div>
     </div>

@@ -81,4 +81,13 @@ body{
       }
     }
   }
+
+  .response-form{
+    display: flex;
+    flex-direction: column;
+
+    .btn-submit{
+      width: 100px;
+    }
+  }
 }

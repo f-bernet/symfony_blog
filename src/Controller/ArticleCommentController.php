@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleComment;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,10 @@ class ArticleCommentController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager, Article $article): Response
     {
         $comment = new ArticleComment();
-        $text = $request->request->get('commentText');
+
+        $data = $request->request->all();
+        $key = array_key_first($data);
+        $text = $data[array_key_first($data)];
 
         if(empty($text)){
             $this->addFlash('error', 'Empty comment');
@@ -29,13 +33,24 @@ class ArticleCommentController extends AbstractController
         }
 
         $comment->setText($text);
+        $comment->setArticle($article);
+
+        if(str_contains($key, 'comment-response-')){
+            $mainComment = $entityManager->getRepository(ArticleComment::class)->find(str_replace('comment-response-', '', $key));
+            $comment->setCommentResponse($mainComment);
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $comment->setUser($user);
+
         $entityManager->persist($comment);
         $entityManager->flush();
 
         $this->addFlash('success', 'Comment created');
 
         return $this->redirectToRoute('article_item', [
-            'article' => $article
+            'article' => $article->getId()
         ]);
     }
 
