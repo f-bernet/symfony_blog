@@ -5,8 +5,33 @@
         <div class="article-title" style="background-image: url('/uploads/images/article/{{ article.image }}')">
             <h1>{{ article.title }}</h1>
         </div>
+
         <div class="article-content">
             {{ article.content | raw }}
+        </div>
+
+        <div class="article-comments">
+            <span class="article-comments-title">Comments</span>
+            <div class="article-comments-content">
+                {% for comment in comments.mainComment %}
+                    <div class="article-comments-item">
+                        <div class="article-comments-main">
+                            <p class="article-comments-main-text">{{ comment.text }}</p>
+                            <p class="article-comments-main-user">{{ comment.user.email }} ({{ comment.createdAt|date('d-m-Y g:ia') }})</p>
+                        </div>
+                        {% if comments.responseComment[comment.id] is defined and comments.responseComment[comment.id] is not empty %}
+                            <div class="article-comments-responses">
+                                {% for response in comments.responseComment[comment.id] %}
+                                    <div class="article-comments-response">
+                                        <p class="article-comments-response-text">{{ response.text }}</p>
+                                        <p class="article-comments-response-user">{{ response.user.email }} ({{ response.createdAt|date('d-m-Y g:ia') }})</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

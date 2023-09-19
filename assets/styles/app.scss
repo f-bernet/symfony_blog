@@ -24,4 +24,46 @@ body{
     margin: auto;
     padding: 15px;
   }
+
+  .article-comments{
+    width: 75%;
+    margin: auto;
+    padding: 15px;
+
+    .article-comments-title{
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .article-comments-content{
+      padding-left: 10px;
+
+      .article-comments-item{
+        padding: 10px 0;
+
+        .article-comments-main{
+
+          .article-comments-main-user{
+            font-size: 12px;
+            color: gray;
+          }
+        }
+
+        .article-comments-responses{
+          padding-top: 10px;
+
+          .article-comments-response{
+            margin-left: 10px;
+            padding: 10px 0 10px 5px;
+            border-left: 2px solid grey;
+
+            .article-comments-response-user{
+              font-size: 12px;
+              color: gray;
+            }
+          }
+        }
+      }
+    }
+  }
 }
