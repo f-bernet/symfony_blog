@@ -79,7 +79,7 @@ class ArticleCommentController extends AbstractController
     }
 
     #[Route('/{comment}/delete', name: 'article_comment_delete')]
-    public function delete(EntityManagerInterface $entityManager, ArticleComment $comment): Response
+    public function delete(EntityManagerInterface $entityManager, Article $article,ArticleComment $comment): Response
     {
         $comment->setText('[deleted]');
         $entityManager->persist($comment);
@@ -90,6 +90,8 @@ class ArticleCommentController extends AbstractController
             'Comment deleted'
         );
 
-        return $this->redirectToRoute('article_index');
+        return $this->redirectToRoute('article_item', [
+            'article' => $article->getId()
+        ]);
     }
 }

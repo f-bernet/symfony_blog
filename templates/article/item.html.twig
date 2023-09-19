@@ -13,48 +13,64 @@
         <div class="article-comments">
             <span class="article-comments-title">Comments</span>
             <div class="article-comments-content">
-                {% for comment in comments.mainComment %}
-                    <div class="article-comments-item">
-                        <div class="article-comments-main">
-                            <p class="article-comments-main-text">{{ comment.text }}</p>
-                            <p class="article-comments-main-user">{{ comment.user.email }}
-                                ({{ comment.createdAt|date('d-m-Y g:ia') }})</p>
-                        </div>
-                        {% if comments.responseComment[comment.id] is defined and comments.responseComment[comment.id] is not empty %}
-                            <div class="article-comments-responses">
-                                {% for response in comments.responseComment[comment.id] %}
-                                    <div class="article-comments-response">
-                                        <p class="article-comments-response-text">{{ response.text }}</p>
-                                        <p class="article-comments-response-user">{{ response.user.email }}
-                                            ({{ response.createdAt|date('d-m-Y g:ia') }})</p>
-                                    </div>
-                                {% endfor %}
+                {% if comments is defined and comments is not empty %}
+                    {% for comment in comments.mainComment %}
+                        <div class="article-comments-item">
+                            <div class="article-comments-main">
+                                <p class="article-comments-main-text">{{ comment.text }}</p>
+                                <p class="article-comments-main-user">{{ comment.user.email }}
+                                    ({{ comment.createdAt|date('d-m-Y g:ia') }})</p>
+                                {% if app.user is not empty and app.user == comment.user or is_granted('ROLE_ADMIN') or is_granted('ROLE_OWNER') %}
+                                    <a href="{{ path('article_comment_delete', {'article': article.id, 'comment': comment.id}) }}" class="article-comments-main-delete">Delete comment</a>
+                                {% endif %}
                             </div>
-                        {% endif %}
-                        <span class="comment-reply" onclick="getElementById('comment_{{ comment.id }}').style.display=''; this.style.display='none'">
-                            Reply
-                        </span>
-                        <form name="comment-response-{{ comment.id }}"
-                              action="{{ path('article_comment_create', {'article': article.id}) }}"
-                              method="post" class="response-form" id="comment_{{ comment.id }}"
-                              style="display: none">
-                            <textarea name="comment-response-{{ comment.id }}" rows="5" placeholder="Reply here..."></textarea>
-                            <button type="submit" class="btn btn-primary btn-submit">Reply</button>
-                        </form>
-                    </div>
-                {% endfor %}
+                            {% if comments.responseComment[comment.id] is defined and comments.responseComment[comment.id] is not empty %}
+                                <div class="article-comments-responses">
+                                    {% for response in comments.responseComment[comment.id] %}
+                                        <div class="article-comments-response">
+                                            <p class="article-comments-response-text">{{ response.text }}</p>
+                                            <p class="article-comments-response-user">{{ response.user.email }}
+                                                ({{ response.createdAt|date('d-m-Y g:ia') }})</p>
+                                            {% if app.user is not empty and app.user == comment.user or is_granted('ROLE_ADMIN') or is_granted('ROLE_OWNER') %}
+                                                <a href="{{ path('article_comment_delete', {'article': article.id, 'comment': response.id}) }}" class="article-comments-response-delete">Delete comment</a>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if app.user is not empty %}
+                                <span class="comment-reply"
+                                      onclick="getElementById('comment_{{ comment.id }}').style.display=''; this.style.display='none'">
+                                    Reply
+                                </span>
+                                <form name="comment-response-{{ comment.id }}"
+                                      action="{{ path('article_comment_create', {'article': article.id}) }}"
+                                      method="post" class="response-form" id="comment_{{ comment.id }}"
+                                      style="display: none">
+                                    <textarea name="comment-response-{{ comment.id }}" rows="5"
+                                              placeholder="Reply here..."></textarea>
+                                    <button type="submit" class="btn btn-primary btn-submit">Reply</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No comment on this article yet</p>
+                {% endif %}
 
-                <button type="button" class="btn btn-primary"
-                        onclick="getElementById('comment_{{ article.id }}').style.display=''; this.style.display='none'">
-                    Comment
-                </button>
-                <form name="comment-article-{{ article.id }}"
-                      action="{{ path('article_comment_create', {'article': article.id}) }}"
-                      method="post" class="response-form" id="comment_{{ article.id }}"
-                      style="display: none">
-                    <textarea name="comment-article-{{ article.id }}" rows="5" placeholder="Comment here..."></textarea>
-                    <button type="submit" class="btn btn-primary btn-submit">Comment</button>
-                </form>
+                {% if app.user is not empty %}
+                    <button type="button" class="btn btn-primary"
+                            onclick="getElementById('comment_{{ article.id }}').style.display=''; this.style.display='none'">
+                        Comment
+                    </button>
+                    <form name="comment-article-{{ article.id }}"
+                          action="{{ path('article_comment_create', {'article': article.id}) }}"
+                          method="post" class="response-form" id="comment_{{ article.id }}"
+                          style="display: none">
+                        <textarea name="comment-article-{{ article.id }}" rows="5" placeholder="Comment here..."></textarea>
+                        <button type="submit" class="btn btn-primary btn-submit">Comment</button>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
