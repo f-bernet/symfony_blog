@@ -57,13 +57,14 @@ class ArticleCommentController extends AbstractController
     #[Route('/{comment}/update', name: 'article_comment_update')]
     public function update(Request $request, EntityManagerInterface $entityManager, Article $article, ArticleComment $comment): Response
     {
-        $text = $request->request->get('commentText');
+        $data = $request->request->all();
+        $text = reset($data);
 
         if(empty($text)){
             $this->addFlash('error', 'Empty comment');
 
-            return $this->render('article/comment/update', [
-                'comment' => $comment
+            return $this->redirectToRoute('article_item', [
+                'article' => $article->getId()
             ]);
         }
 
@@ -74,7 +75,7 @@ class ArticleCommentController extends AbstractController
         $this->addFlash('success', 'Comment created');
 
         return $this->redirectToRoute('article_item', [
-            'article' => $article
+            'article' => $article->getId()
         ]);
     }
 
