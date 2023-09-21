@@ -4,7 +4,7 @@
     <div class="article-listing">
         {% if articles is not empty %}
             {% for article in articles %}
-                <a href="{{ path('article_item', {article: article.id}) }}" class="card article-card" style="width: 18rem;">
+                <a href="{{ path('article_item', {article: article.id}) }}" class="card article-card">
                     <img class="card-img-top" src="/uploads/images/article/{{ article.image }}" alt="{{ article.image }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ article.title }}</h5>

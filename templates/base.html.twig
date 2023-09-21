@@ -14,10 +14,15 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.flashes is defined and app.flashes is not empty %}
-            {% for flash in app.flashes %}
-                {{ dump(flash) }}
+        {% set flashes = app.flashes %}
+        {% if flashes is defined and flashes|length > 0 %}
+            <div class="flash-messages">
+            {% for key, flash in flashes %}
+                {% for message in flash %}
+                    <div class="flash-message bg-{{ key }}">{{ message }}</div>
+                {% endfor %}
             {% endfor %}
+            </div>
         {% endif %}
 
         <nav class="navbar navbar-dark bg-primary d-flex justify-content-start p-3">
@@ -26,6 +31,20 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('article_index') }}">Articles</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav d-flex flex-row ms-auto">
+                {% if app.user is not defined or app.user is empty %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item active ms-2">
+                        <a class="nav-link" href="{{ path('app_register') }}">Register</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
 

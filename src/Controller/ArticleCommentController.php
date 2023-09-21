@@ -25,7 +25,7 @@ class ArticleCommentController extends AbstractController
         $text = $data[array_key_first($data)];
 
         if(empty($text)){
-            $this->addFlash('error', 'Empty comment');
+            $this->addFlash('danger', 'Empty comment');
 
             return $this->redirectToRoute('article_item', [
                 'article' => $article
@@ -61,7 +61,7 @@ class ArticleCommentController extends AbstractController
         $text = reset($data);
 
         if(empty($text)){
-            $this->addFlash('error', 'Empty comment');
+            $this->addFlash('danger', 'Empty comment');
 
             return $this->redirectToRoute('article_item', [
                 'article' => $article->getId()
